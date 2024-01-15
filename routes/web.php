@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\InicioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', InicioController::class)->name('inicio');
+
+Route::get('animales', [AnimalController::class,'index'])->name('animales.index');
+
+Route::get('animales/crear', [AnimalController::class,'create'])->name('animales.create');
+
+Route::get('animales/{animal}',[AnimalController::class,'show'])->name('animales.show');
+
+Route::get('animales/{animal}/editar', [AnimalController::class,'edit'])->name('animales.edit');
+
+/*Route::controller(AnimalController::class)->group(function()
+{
+    Route::get('/animales',"animales.index")->name("animales.index");
+W
+    Route::get('/animales/crear',"animales.create")->name("animales.create");
+
+    Route::get('/animales/{animales}',"animales.show")->name("animales.show");
+
+    Route::get('/animales/{animal}/editar',"animales.edit")->name("animales.edit");
+});*/
