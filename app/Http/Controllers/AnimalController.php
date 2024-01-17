@@ -90,6 +90,7 @@ class AnimalController extends Controller
     public function index(){
         return view('animales.index', ['animales'=>$this->animales]);
     }
+
     public function show(string $animal){
 
         foreach ($this->animales as $registro) {
