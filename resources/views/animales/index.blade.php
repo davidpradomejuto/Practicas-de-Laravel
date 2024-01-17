@@ -1,7 +1,7 @@
 @extends('layouts.plantilla')
 @section('titulo','Zoologico')
 @section('contenido')
-<h1 class="text-2xl font-bold underline">Listado de animales</h1>
+<h1 class="text-2xl font-bold underline ml-8">Listado de animales</h1>
 
 <div class="flex flex-row gap-5 flex-wrap justify-center mx-5 my-2">
 @foreach ($animales as $animal)

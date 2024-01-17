@@ -11,7 +11,7 @@
         <p>Alimentacion: {{ $animal['alimentacion'] }}</p>
         <p>Descripcion: {{ $animal['descripcion'] }}</p>
     </div>
-    <button class="btn btn-green"><a>Editar este animal</a></button>
+    <button class="bverde"><a href="{{route('animales.edit',$animal['especie'])}}">Editar este animal</a></button>
 
 </div>
 @endsection

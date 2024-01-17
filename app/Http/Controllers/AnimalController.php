@@ -106,6 +106,11 @@ class AnimalController extends Controller
     }
 
     public function edit(string $animal){
+        foreach ($this->animales as $registro) {
+            if($registro['especie'] === $animal){
+                $animal = $registro;
+            }
+        }
         return view('animales.edit', ['animal'=>$animal]);
     }
 
