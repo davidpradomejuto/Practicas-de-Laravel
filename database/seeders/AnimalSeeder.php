@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use DB;
 use App\Models\Animal;
 use Illuminate\Support\Str;
 
@@ -95,6 +96,8 @@ class AnimalSeeder extends Seeder
     );
     public function run(): void
     {
+
+
         foreach ($this->animales as $animal)
         {
             $a=new Animal();
