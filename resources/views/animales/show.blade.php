@@ -2,7 +2,7 @@
 @section('titulo','Mostrar')
 @section('contenido')
 <div class="mx-5 my-5">
-    <img class="" width="300px" height="200px" src='{{ asset("storage/imagenes/$animal->imagen")}}' alt="Imagen del animal">
+    <img class="" width="300px" height="200px" src='{{ asset("assets/imagenes/$animal->imagen")}}' alt="Imagen del animal">
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">{{ $animal->especie }}</div>
         <p>Peso: {{ $animal->peso }}</p>

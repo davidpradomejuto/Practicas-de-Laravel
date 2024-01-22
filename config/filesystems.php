@@ -45,10 +45,8 @@ return [
         ],
         'imagenes' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/imagenes'),
-            'url' => env('APP_URL').'/storage',
+            'root' => public_path('assets/imagenes'),
             'visibility' => 'public',
-            'throw' => false,
         ],
 
         's3' => [

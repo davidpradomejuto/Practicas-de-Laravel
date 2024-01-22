@@ -3,9 +3,16 @@
 @section('contenido')
     <h1 class="text-2xl font-bold mx-8">Pagina para crear un animal</h1>
 
-
+    @if ($errors->any())
+    <ul>
+        @foreach ($errors->all() as  $error)
+            <li class='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded'> {{$error}}</li>
+        @endforeach
+    </ul>
+    @endif
     <form action="{{route('animales.store')}}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-7 items-center justify-center">
         @csrf
+
         <div class="">
             <label for="especie">Especie del animal: </label>
             <input type="text" class="border-2" id="especie" name="especie" require>
