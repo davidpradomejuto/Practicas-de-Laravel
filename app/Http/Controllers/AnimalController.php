@@ -52,8 +52,8 @@ class AnimalController extends Controller
         $a->altura = $request->altura;
         $a->fechaNacimiento = $request->fechaNacimiento;
         if ($request->hasFile('imagen')) {
-            $a->imagen = $request->imagen;
-            $path = $request->photo->store('images',uniqid().$request->file('imagen')->extension());
+            $path = $request->file('imagen')->store('','imagenes');
+            $a->imagen = $path;
            }
         $a->alimentacion = $request->alimentacion;
         $a->descripcion = $request->descripcion;
@@ -68,7 +68,10 @@ class AnimalController extends Controller
         $animal->peso = $request->peso;
         $animal->altura = $request->altura;
         $animal->fechaNacimiento = $request->fechaNacimiento;
-        $animal->imagen = $request->imagen;
+        if ($request->hasFile('imagen')) {
+            $path = $request->file('imagen')->store('','imagenes');
+            $animal->imagen = $path;
+           }
         $animal->alimentacion = $request->alimentacion;
         $animal->descripcion = $request->descripcion;
         $animal->save();

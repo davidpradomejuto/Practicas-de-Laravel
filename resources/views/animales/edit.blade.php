@@ -3,7 +3,7 @@
 @section('contenido')
 <h1 class="text-2xl font-bold underline">Pagina para editar un animal llamado {{$animal['especie']}}</h1>
 
-    <form action="{{route('animales.upadte',$animal)}}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-7 items-center justify-center">
+    <form action="{{route('animales.update',$animal)}}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-7 items-center justify-center">
         @csrf
         @method("put")
         <div class="mb-1">
