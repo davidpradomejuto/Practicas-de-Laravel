@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\InicioController;
+use App\Http\Controllers\RevisionesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,10 @@ Route::put('animales/{animal}',[AnimalController::class,'update'])->name('animal
 
 
 Route::get('animales/{animal}/editar', [AnimalController::class,'edit'])->name('animales.edit')->middleware('auth');
+
+Route::get('revisiones/{animal}/crear', [RevisionesController::class,'create'])->name('revisiones.create')->middleware('auth');
+
+Route::post('revisiones', [RevisionesController::class,'store'])->name('revisiones.store');
 
 /*Route::controller(AnimalController::class)->group(function()
 {

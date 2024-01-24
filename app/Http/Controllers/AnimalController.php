@@ -19,14 +19,14 @@ class AnimalController extends Controller
         return view('animales.index', ['animales' => $animales]);
     }
 
-    public function show(string $animal)
+    public function show(Animal $animal)
     {
 
-        try {
-            $animal = Animal::where('especie', '=', $animal)->firstOrFail();
-        } catch (Exception $e) {
-            echo ("Error general " . $e->getMessage());
-        }
+        // try {
+        //     $animal = Animal::where('especie', '=', $animal)->firstOrFail();
+        // } catch (Exception $e) {
+        //     echo ("Error general " . $e->getMessage());
+        // }
 
         return view('animales.show', ['animal' => $animal]);
     }
@@ -36,13 +36,13 @@ class AnimalController extends Controller
         return view('animales.create');
     }
 
-    public function edit(string $animal)
+    public function edit(Animal $animal)
     {
-        try {
-            $animal = Animal::where('especie', '=', $animal)->firstOrFail();
-        } catch (Exception $e) {
-            echo ("Error general" . $e->getMessage());
-        }
+        // try {
+        //     $animal = Animal::where('especie', '=', $animal)->firstOrFail();
+        // } catch (Exception $e) {
+        //     echo ("Error general" . $e->getMessage());
+        // }
 
         return view('animales.edit', ['animal' => $animal]);
     }
@@ -93,6 +93,7 @@ class AnimalController extends Controller
                 'imagen.mimes' => 'El formato de la imagen no es valido',
             ]
         );
+
 
         try {
             $animal->especie = $request->especie;

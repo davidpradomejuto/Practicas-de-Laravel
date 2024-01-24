@@ -25,6 +25,9 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->delete();
         $this->call(UserSeeder::class);
 
+        DB::table('animales_revisiones')->delete();
+        $this->call(RevisionSeeder::class);
+
         \App\Models\User::factory(5)->create();
 
     }
