@@ -15,6 +15,18 @@ class RevisionesController extends Controller
     }
 
     public function store(Request $request){
+
+        $request->validate(
+            [
+                'fecha' => 'required',
+                'descripcion' => 'required|min:15',
+
+            ],
+            [
+                'fecha.required' => 'La fecha es obligatoria',
+                'descripcion.required' => 'La descripcion es obligatoria',
+            ]
+        );
         try{
             $revision = new Revision();
             $revision->descripcion = $request->descripcion;

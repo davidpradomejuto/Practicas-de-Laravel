@@ -11,6 +11,7 @@
             <p>Fecha de nacimiento: {{ $animal->fechaNacimiento }}</p>
             <p>Alimentacion: {{ $animal->alimentacion }}</p>
             <p>Descripcion: {{ $animal->descripcion }}</p>
+            <p>Revisiones :{{$animal->revisiones->count()}}</p>
             <hr>
             <h2 class="font-bold">Revisiones</h2>
 
@@ -21,6 +22,13 @@
             @endforelse
 
             <hr>
+            <h2 class="font-bold">Cuidadores</h2>
+
+            @forelse ($animal->cuidadores as $cuidador)
+                <p>{{ $cuidador->nombre }}</p>
+            @empty
+                <p>El animal no tiene Cuidadores</p>
+            @endforelse
 
         </div>
         <button class="bverde"><a href="{{ route('animales.edit', $animal) }}">Editar este animal</a></button>

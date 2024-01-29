@@ -32,6 +32,8 @@ Route::put('animales/{animal}',[AnimalController::class,'update'])->name('animal
 
 Route::get('animales/{animal}/editar', [AnimalController::class,'edit'])->name('animales.edit')->middleware('auth');
 
+
+
 Route::get('revisiones/{animal}/crear', [RevisionesController::class,'create'])->name('revisiones.create')->middleware('auth');
 
 Route::post('revisiones', [RevisionesController::class,'store'])->name('revisiones.store');

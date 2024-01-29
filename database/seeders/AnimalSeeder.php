@@ -110,6 +110,9 @@ class AnimalSeeder extends Seeder
             $a->alimentacion=$animal["alimentacion"];
             $a->descripcion=$animal["descripcion"];
             $a->save();
+            $a->cuidadores()->attach(
+                [rand(1,10),rand(11,20)]
+            );
 
         }
     }

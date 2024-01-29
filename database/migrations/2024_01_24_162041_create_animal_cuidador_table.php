@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('animal_cuidador', function (Blueprint $table) {
-            $table->id();
+            $table->primary(["animal_id","cuidador_id"]);
             $table->unsignedBigInteger('animal_id');
             //genero la clave foranea para la tabla animales
             $table->foreign("animal_id")->references("id")->on("animales")->onDelete("cascade");

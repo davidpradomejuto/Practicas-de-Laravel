@@ -14,4 +14,8 @@ class Cuidador extends Model
     public function animales(){
         return $this->belongsToMany(Animal::class);
     }
+
+    public function titulaciones(){
+        return $this->
+    }
 }

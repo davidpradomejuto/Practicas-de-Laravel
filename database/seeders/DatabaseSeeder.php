@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         DB::table('animales')->delete();
+        \App\Models\Cuidador::factory(20)->create();
         $this->call(AnimalSeeder::class);
 
         DB::table('users')->delete();
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RevisionSeeder::class);
 
         \App\Models\User::factory(5)->create();
+
 
     }
 }
