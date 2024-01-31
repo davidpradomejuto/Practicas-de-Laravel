@@ -3,6 +3,8 @@
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\RevisionesController;
+use App\Http\Controllers\CuidadoresController;
+use App\Http\Controllers\TitulacionesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +39,11 @@ Route::get('animales/{animal}/editar', [AnimalController::class,'edit'])->name('
 Route::get('revisiones/{animal}/crear', [RevisionesController::class,'create'])->name('revisiones.create')->middleware('auth');
 
 Route::post('revisiones', [RevisionesController::class,'store'])->name('revisiones.store');
+
+Route::get('cuidadores/{cuidador}', [CuidadoresController::class,'show'])->name('cuidadores.show');
+
+Route::get('titulaciones/{titulacion}', [TitulacionesController::class,'show'])->name('titulaciones.show');
+
 
 /*Route::controller(AnimalController::class)->group(function()
 {

@@ -25,7 +25,9 @@
             <h2 class="font-bold">Cuidadores</h2>
 
             @forelse ($animal->cuidadores as $cuidador)
-                <p>{{ $cuidador->nombre }}</p>
+
+            <hr>
+            <a href="{{ route('cuidadores.show', $cuidador) }}">{{ $cuidador->nombre }}</a>
             @empty
                 <p>El animal no tiene Cuidadores</p>
             @endforelse

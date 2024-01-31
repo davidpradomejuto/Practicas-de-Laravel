@@ -49,7 +49,6 @@
                         <p> Alimentacion: <span id="alimentacion">{{ $animal->alimentacion }}</span></p>
                     </div>
                 </div>
-
             </a>
         @empty
             <p>No existen animales</p>

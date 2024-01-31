@@ -10,4 +10,14 @@ class Titulacion extends Model
     use HasFactory;
 
     protected $table = "titulaciones";
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function cuidadores(){
+        return $this->hasMany(Cuidador::class,'id_titulacion1')->get()
+        ->merge($this->hasMany(Cuidador::class,'id_titulacion2')->get());
+    }
+
 }

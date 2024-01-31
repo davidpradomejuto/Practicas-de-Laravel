@@ -10,12 +10,18 @@ class Cuidador extends Model
     use HasFactory;
 
     protected $table ='cuidadores';
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function animales(){
         return $this->belongsToMany(Animal::class);
     }
 
     public function titulaciones(){
-        return $this->
+        return $this->belongsTo(Titulacion::class,'id_titulacion1')->get()
+        ->merge($this->belongsTo(Titulacion::class,'id_titulacion2')->get());
     }
+
 }

@@ -20,7 +20,8 @@ class TitulacionFactory extends Factory
         $nombre = $this->faker->jobTitle;
 
         return [
-            "nombre" => $nombre,"slug" => Str::slug($nombre)
+            "nombre" => $nombre,
+            "slug" => Str::slug($nombre)
         ];
     }
 }

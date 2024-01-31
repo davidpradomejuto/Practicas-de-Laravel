@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        \App\Models\Titulacion::factory(15)->create();
+
         DB::table('animales')->delete();
         \App\Models\Cuidador::factory(20)->create();
         $this->call(AnimalSeeder::class);
@@ -30,7 +32,5 @@ class DatabaseSeeder extends Seeder
         $this->call(RevisionSeeder::class);
 
         \App\Models\User::factory(5)->create();
-
-
     }
 }

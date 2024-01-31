@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Titulacion;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cuidador>
  */
@@ -16,10 +17,14 @@ class CuidadorFactory extends Factory
      */
     public function definition(): array
     {
+        $titulaciones = Titulacion::pluck('id')->toArray();
+
         $nombre = $this->faker->name;
         return [
             'nombre' => $nombre,
-            'slug' => Str::slug($nombre)
+            'slug' => Str::slug($nombre),
+            'id_titulacion1' => $this->faker->randomElement($titulaciones),
+            'id_titulacion2' => $this->faker->randomElement($titulaciones)
         ];
     }
 }

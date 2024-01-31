@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use DB;
 use App\Models\Animal;
+use App\Models\Imagen;
 use Illuminate\Support\Str;
 
 
@@ -106,7 +107,10 @@ class AnimalSeeder extends Seeder
             $a->peso=$animal["peso"];
             $a->altura=$animal["altura"];
             $a->fechaNacimiento=$animal["fechaNacimiento"];
-            $a->imagen=$animal["imagen"];
+            // $a->imagen=$animal["imagen"];
+            /* Añado la imagen con el modelo*/
+            $imagen = new Imagen();
+            $
             $a->alimentacion=$animal["alimentacion"];
             $a->descripcion=$animal["descripcion"];
             $a->save();

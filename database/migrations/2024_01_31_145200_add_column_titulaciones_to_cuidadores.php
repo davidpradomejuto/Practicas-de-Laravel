@@ -11,17 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cuidadores_titulaciones', function (Blueprint $table) {
-            $table->primary(["id_cuidador","id_titulacion1","id_titulacion2"]);
-
-            $table->unsignedBigInteger('id_cuidador');
+        Schema::table('cuidadores', function (Blueprint $table) {
             $table->unsignedBigInteger('id_titulacion1');
             $table->unsignedBigInteger('id_titulacion2');
-            $table->foreign("id_cuidador")->references("id")->on("cuidadores")->onDelete("cascade");
             $table->foreign("id_titulacion1")->references("id")->on("titulaciones")->onDelete("cascade");
             $table->foreign("id_titulacion2")->references("id")->on("titulaciones")->onDelete("cascade");
-
-            $table->timestamps();
         });
     }
 
@@ -30,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cuidadores_titulaciones');
+        Schema::table('cuidadores', function (Blueprint $table) {
+            //
+        });
     }
 };
