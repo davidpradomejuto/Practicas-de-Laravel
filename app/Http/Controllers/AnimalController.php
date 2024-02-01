@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Imagen;
 use Exception;
 use PDOException;
 use App\Models\Animal;
@@ -17,6 +18,11 @@ class AnimalController extends Controller
     {
         $animales = Animal::all();
         return view('animales.index', ['animales' => $animales]);
+    }
+
+    public function destroy(Animal $animal){
+        $animal->delete();
+        return redirect()->route('animales.index');
     }
 
     public function show(Animal $animal)
@@ -63,8 +69,16 @@ class AnimalController extends Controller
                     $imagen->move( public_path('assets/imagenes'),$nombreImagen);
                 */
 
-                $a->imagen = $request->imagen->store('', 'imagenes');
+                //$a->imagen = $request->imagen->store('', 'imagenes');
+                /* Añado la imagen con el modelo*/
+                $imagen = new Imagen();
+                $imagenRequest = $request->file('imagen');
+                $imagen->nombre = $imagenRequest->getClientOriginalName();
+                $imagen->url = 'assets/imagenes/'.$request->imagen->store('', 'imagenes');
+                $imagen->save();
+                $a->id_imagen=$imagen->id;
             }
+
             $a->alimentacion = $request->alimentacion;
             $a->descripcion = $request->descripcion;
             $a->save();
@@ -111,12 +125,20 @@ class AnimalController extends Controller
                     $nombreImagen= uniqId().'-'.$imagen->getClientOriginalName();
                     $imagen->move( public_path('assets/imagenes'),$nombreImagen);
                 */
-                $path = $request->imagen->store('', 'imagenes');
-                if ($animal->imagen) {
+
+                /* Añado la imagen con el modelo*/
+                $imagen = new Imagen();
+                $imagenRequest = $request->file('imagen');
+                $imagen->nombre = $imagenRequest->getClientOriginalName();
+                $imagen->url = 'assets/imagenes/'.$request->imagen->store('', 'imagenes');
+                $imagen->save();
+                //$path = $request->imagen->store('', 'imagenes');
+                if ($animal->id_imagen) {
                     //elimino la imagen anterior de animal
-                    Storage::disk('imagenes')->delete($animal->imagen);
+                    Storage::disk('imagenes')->delete($animal->id_imagen->nombre);
                 }
-                $animal->imagen = $path;
+
+                $animal->id_imagen = $imagen->id;
             }
             $animal->alimentacion = $request->alimentacion;
             $animal->descripcion = $request->descripcion;

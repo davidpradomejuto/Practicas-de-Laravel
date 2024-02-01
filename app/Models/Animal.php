@@ -30,4 +30,8 @@ class Animal extends Model
     public function cuidadores(){
         return $this->belongsToMany(Cuidador::class);
     }
+
+    public function imagenes(){
+        return $this->hasOne(Imagen::class,'id');
+    }
 }

@@ -2,8 +2,7 @@
 @section('titulo', 'Mostrar')
 @section('contenido')
     <div class="mx-5 my-5">
-        <img class="" width="300px" height="200px" src='{{ asset("assets/imagenes/$animal->imagen") }}'
-            alt="Imagen del animal">
+        <img class="" width="300px" height="200px" src='{{ asset($animal->imagenes->url) }}' alt="Imagen del animal">
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2">{{ $animal->especie }}</div>
             <p>Peso: {{ $animal->peso }}</p>
@@ -11,7 +10,7 @@
             <p>Fecha de nacimiento: {{ $animal->fechaNacimiento }}</p>
             <p>Alimentacion: {{ $animal->alimentacion }}</p>
             <p>Descripcion: {{ $animal->descripcion }}</p>
-            <p>Revisiones :{{$animal->revisiones->count()}}</p>
+            <p>Revisiones :{{ $animal->revisiones->count() }}</p>
             <hr>
             <h2 class="font-bold">Revisiones</h2>
 
@@ -25,9 +24,8 @@
             <h2 class="font-bold">Cuidadores</h2>
 
             @forelse ($animal->cuidadores as $cuidador)
-
-            <hr>
-            <a href="{{ route('cuidadores.show', $cuidador) }}">{{ $cuidador->nombre }}</a>
+                <hr>
+                <a href="{{ route('cuidadores.show', $cuidador) }}">{{ $cuidador->nombre }}</a>
             @empty
                 <p>El animal no tiene Cuidadores</p>
             @endforelse
@@ -35,6 +33,7 @@
         </div>
         <button class="bverde"><a href="{{ route('animales.edit', $animal) }}">Editar este animal</a></button>
         <button class="bverde"><a href="{{ route('revisiones.create', $animal) }}">Crear una revision para este animal</a></button>
+        <button class="bRojo"><a href="{{ route('animales.destroy', $animal) }}">Borrar este animal</a></button>
 
     </div>
 @endsection

@@ -110,7 +110,12 @@ class AnimalSeeder extends Seeder
             // $a->imagen=$animal["imagen"];
             /* Añado la imagen con el modelo*/
             $imagen = new Imagen();
-            $
+            $imagen->nombre=$animal["imagen"];
+            $imagen->url='assets/imagenes/'.$animal["imagen"];
+            $imagen->save();
+            //guardo el id de la imagen en el animal
+            $a->id_imagen=$imagen->id;
+
             $a->alimentacion=$animal["alimentacion"];
             $a->descripcion=$animal["descripcion"];
             $a->save();

@@ -10,4 +10,9 @@ class Imagen extends Model
     use HasFactory;
 
     protected $table = 'imagenes';
+
+
+    public function animales(){
+        return $this->belongsTo(Animal::class,'id_imagen');
+    }
 }

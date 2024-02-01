@@ -13,3 +13,7 @@
      @apply text-white border border-white py-2.5 px-5 rounded-md hover:bg-white hover:text-green-800 transition duration-500 ease-in-out;
  }
 
+
+ .bRojo{
+    @apply text-white border border-white py-2.5 px-5 rounded-md hover:bg-red-800 hover:text-red-800 transition duration-500 ease-in-out;
+}
