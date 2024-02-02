@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::table('animales', function (Blueprint $table) {
             $table->dropColumn('imagen');
-            $table->unsignedBigInteger('id_imagen');
+            $table->unsignedBigInteger('id_imagen')->unique();
             $table->foreign("id_imagen")->references("id")->on("imagenes")->onDelete("cascade");
         });
     }

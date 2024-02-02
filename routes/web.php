@@ -31,8 +31,7 @@ Route::get('animales/{animal}',[AnimalController::class,'show'])->name('animales
 
 Route::put('animales/{animal}',[AnimalController::class,'update'])->name('animales.update');
 
-Route::delete('animales/{animal}', [AnimalController::class,'destroy'])->name('animales.destroy')->middleware('auth');
-
+Route::delete('animales/{animal}', [AnimalController::class,'destroy'])->name('animales.destroy');
 
 Route::get('animales/{animal}/editar', [AnimalController::class,'edit'])->name('animales.edit')->middleware('auth');
 

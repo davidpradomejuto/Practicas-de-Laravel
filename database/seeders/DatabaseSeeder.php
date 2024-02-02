@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        DB::table('titulaciones')->delete();
+        DB::table('imagenes')->delete();
+
         \App\Models\Titulacion::factory(15)->create();
 
         DB::table('animales')->delete();

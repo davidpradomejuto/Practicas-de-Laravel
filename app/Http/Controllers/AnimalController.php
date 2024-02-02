@@ -20,9 +20,15 @@ class AnimalController extends Controller
         return view('animales.index', ['animales' => $animales]);
     }
 
-    public function destroy(Animal $animal){
-        $animal->delete();
-        return redirect()->route('animales.index');
+    public function destroy(Animal $animal)
+    {
+        try {
+            $animal->delete();
+        } catch (PDOException $e) {
+
+            return redirect()->route('animales.index', ['mensaje' => "error " . $e->getMessage()]);
+        }
+        return redirect()->route('animales.index', ['mensaje' => "Animal borrado"]);
     }
 
     public function show(Animal $animal)
@@ -74,15 +80,15 @@ class AnimalController extends Controller
                 $imagen = new Imagen();
                 $imagenRequest = $request->file('imagen');
                 $imagen->nombre = $imagenRequest->getClientOriginalName();
-                $imagen->url = 'assets/imagenes/'.$request->imagen->store('', 'imagenes');
+                $imagen->url = 'assets/imagenes/' . $request->imagen->store('', 'imagenes');
                 $imagen->save();
-                $a->id_imagen=$imagen->id;
+                $a->id_imagen = $imagen->id;
             }
 
             $a->alimentacion = $request->alimentacion;
             $a->descripcion = $request->descripcion;
             $a->save();
-            return redirect()->route('animales.show', ['animal' => $a->especie]);
+            return redirect()->route('animales.show', ['animal' => $a]);
         } catch (PDOException $e) {
             return "<p> " . $e->getMessage() . "</p>";
         }
@@ -130,7 +136,7 @@ class AnimalController extends Controller
                 $imagen = new Imagen();
                 $imagenRequest = $request->file('imagen');
                 $imagen->nombre = $imagenRequest->getClientOriginalName();
-                $imagen->url = 'assets/imagenes/'.$request->imagen->store('', 'imagenes');
+                $imagen->url = 'assets/imagenes/' . $request->imagen->store('', 'imagenes');
                 $imagen->save();
                 //$path = $request->imagen->store('', 'imagenes');
                 if ($animal->id_imagen) {

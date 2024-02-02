@@ -34,8 +34,11 @@
             });
         });
     </script>
-
+    @isset($mensaje)
+        <p>{{$mensaje}}</p>
+    @endisset
     <div class="flex flex-row gap-5 flex-wrap justify-center mx-5 my-2">
+
         @forelse ($animales as $animal)
         {{-- Hay que crear un storage por ejemplo "app/public/imagenes" , y luego linkarlo con la carpeta public con el comando php artisan storage:link --}}
             <a class="max-w-sm rounded overflow-hidden shadow-lg" href='{{ route('animales.show', $animal) }}'>
