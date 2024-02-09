@@ -4,6 +4,7 @@ use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\RevisionesController;
 use App\Http\Controllers\CuidadoresController;
+use App\Http\Controllers\RestWebServiceController;
 use App\Http\Controllers\TitulacionesController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,12 @@ Route::post('revisiones', [RevisionesController::class,'store'])->name('revision
 Route::get('cuidadores/{cuidador}', [CuidadoresController::class,'show'])->name('cuidadores.show');
 
 Route::get('titulaciones/{titulacion}', [TitulacionesController::class,'show'])->name('titulaciones.show');
+
+/* --------REST--------*/
+Route::get('rest', [RestWebServiceController::class,'index'])->name('rest.index');
+Route::get('rest/{animal}', [RestWebServiceController::class,'show'])->name('rest.show');
+Route::delete('rest/{animal}/borrar', [RestWebServiceController::class,'destroy'])->name('rest.destroy');
+Route::post('rest/{animal}/insertar', [RestWebServiceController::class,'store'])->name('rest.store');
 
 
 /*Route::controller(AnimalController::class)->group(function()
