@@ -13,9 +13,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('animales', function (Blueprint $table) {
-            $table->dropColumn('imagen');
-            $table->unsignedBigInteger('id_imagen')->unique();
-            $table->foreign("id_imagen")->references("id")->on("imagenes")->onDelete("cascade");
+            $table->unsignedBigInteger('imagen_id')->nullable();
+            // UN animal tiene UNA imagen y UNA imagen pertenece a UN animal
+            // El campo 'imagen_id' hace referencia al campo 'id' de la tabla imagenes
+            $table->foreign('imagen_id')->references('id')->on('imagenes')->onDelete('set null');
+            $table->dropColumn('imagen'); // Eliminamos la columna antigua de imagen
+
         });
     }
 
@@ -25,8 +28,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('animales', function (Blueprint $table) {
-            $table->dropColumn('id_imagen');
-            $table->string('imagen');
+            $table->string('imagen')->nullable();
+            $table->dropForeign('imagen_id');
+            $table->dropColumn('imagen_id');
         });
     }
 };

@@ -11,5 +11,8 @@ class Revision extends Model
 
     protected $table = 'animales_revisiones';
 
+    public function animal(){
+        return $this->belongsTo(Animal::class);
+    }
 
 }

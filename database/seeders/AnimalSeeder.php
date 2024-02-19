@@ -114,11 +114,13 @@ class AnimalSeeder extends Seeder
             $imagen->url='assets/imagenes/'.$animal["imagen"];
             $imagen->save();
             //guardo el id de la imagen en el animal
-            $a->id_imagen=$imagen->id;
+            $a->imagen_id=$imagen->id;
 
             $a->alimentacion=$animal["alimentacion"];
             $a->descripcion=$animal["descripcion"];
             $a->save();
+            $imagen->animal_id= $a->id;
+            $imagen->save();
             $a->cuidadores()->attach(
                 [rand(1,10),rand(11,20)]
             );

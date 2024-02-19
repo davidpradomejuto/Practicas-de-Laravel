@@ -25,7 +25,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\Titulacion::factory(15)->create();
 
         DB::table('animales')->delete();
+
         \App\Models\Cuidador::factory(20)->create();
+
         $this->call(AnimalSeeder::class);
 
         DB::table('users')->delete();

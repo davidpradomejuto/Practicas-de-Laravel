@@ -12,7 +12,7 @@ class Imagen extends Model
     protected $table = 'imagenes';
 
 
-    public function animales(){
-        return $this->belongsTo(Animal::class,'id_imagen');
+    public function animal() {
+        return $this->hasOne(Animal::class);
     }
 }

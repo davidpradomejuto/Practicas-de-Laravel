@@ -2,14 +2,21 @@
 @section('titulo', 'Mostrar')
 @section('contenido')
     <div class="mx-5 my-5">
-         @if ($errors->any())
-        <ul class='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded'>
-            @foreach ($errors->all() as  $error)
-                <li class="text-black"> {{$error}}</li>
-            @endforeach
-        </ul>
-        @endif
-        <img class="" width="300px" height="200px" src='{{ asset($animal->imagenes->url) }}' alt="Imagen del animal">
+        @if (session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4 ml-4 mb-6" role="alert">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4 ml-4 mb-6"
+            role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+        <div style="margin: 1% 10%; border: 1px solid black;border-radius:5px">
+
+        <img class="" width="300px" height="200px" src='{{ asset($animal->imagen->url) }}' alt="Imagen del animal">
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2">{{ $animal->especie }}</div>
             <p>Peso: {{ $animal->peso }}</p>
