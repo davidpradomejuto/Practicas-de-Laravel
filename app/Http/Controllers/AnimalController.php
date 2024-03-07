@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CrearAnimalRequest;
+use Illuminate\Support\Facades\DB;
 
 class AnimalController extends Controller
 {
@@ -23,12 +24,24 @@ class AnimalController extends Controller
     public function destroy(Animal $animal)
     {
         try {
-            $animal->delete();
-        } catch (PDOException $e) {
+            DB::beginTransaction();
 
-            return redirect()->route('animales.index', ['mensaje' => "error " . $e->getMessage()]);
+            // Obtener la imagen asociada al animal
+            $imagen = $animal->imagen;
+
+            // Si el animal tiene imagen la eliminamos del disco
+            if ($imagen) {
+                Storage::disk('imagenes')->delete($imagen->nombre);
+            }
+            $animal->delete();
+            DB::commit();
+
+        } catch (PDOException $e) {
+            DB::rollBack();
+
+            return redirect()->route('animales.index')->with('error', 'Error al eliminar el animal. Detalles: ' . $e->getMessage());
         }
-        return redirect()->route('animales.index', ['mensaje' => "Animal borrado"]);
+        return redirect()->route('animales.index')->with('success', 'Animal Borrado');
     }
 
     public function show(Animal $animal)
@@ -62,12 +75,18 @@ class AnimalController extends Controller
     public function store(CrearAnimalRequest $request)
     {
         try {
+            DB::beginTransaction();
+
             $a = new Animal();
+
             $a->especie = $request->especie;
             $a->slug = Str::slug($request->especie);
             $a->peso = $request->peso;
             $a->altura = $request->altura;
             $a->fechaNacimiento = $request->fechaNacimiento;
+            $a->alimentacion = $request->alimentacion;
+            $a->descripcion = $request->descripcion;
+
             if ($request->hasFile('imagen')) {
                 /*
                     $imagen = $request->file('imagen');
@@ -78,19 +97,23 @@ class AnimalController extends Controller
                 //$a->imagen = $request->imagen->store('', 'imagenes');
                 /* Añado la imagen con el modelo*/
                 $imagen = new Imagen();
-                $imagenRequest = $request->file('imagen');
-                $imagen->nombre = $imagenRequest->getClientOriginalName();
-                $imagen->url = 'assets/imagenes/' . $request->imagen->store('', 'imagenes');
+                $nombre = $request->imagen->store('', 'imagenes');
+                $imagen->url = 'assets/imagenes/' . $nombre;
+                $imagen->nombre = $nombre;
                 $imagen->save();
-                $a->id_imagen = $imagen->id;
+                //pongo el id de la imagen en la tabla animales
+                $a->imagen_id = $imagen->id;
+                $a->save();
+                // y pongo el id del animal en la tabla imagenes
+                $imagen->animal_id = $a->id;
+                $imagen->save();
             }
+            DB::commit();
 
-            $a->alimentacion = $request->alimentacion;
-            $a->descripcion = $request->descripcion;
-            $a->save();
-            return redirect()->route('animales.show', ['animal' => $a]);
+            return redirect()->route('animales.show', ['animal' => $a])->with('success', 'Animal creado');
         } catch (PDOException $e) {
-            return "<p> " . $e->getMessage() . "</p>";
+            DB::rollBack();
+            return redirect()->route('animales.index')->with('error', 'Error al crear el aniaml. Detalles: ' . $e->getMessage());
         }
     }
     public function update(Animal $animal, Request $request)
@@ -116,42 +139,45 @@ class AnimalController extends Controller
 
 
         try {
+            DB::beginTransaction();
+
             $animal->especie = $request->especie;
             $animal->slug = Str::slug($request->especie);
             $animal->peso = $request->peso;
             $animal->altura = $request->altura;
             $animal->fechaNacimiento = $request->fechaNacimiento;
-            if ($request->hasFile('imagen') && !empty($request->imagen) && $request->imagen->isValid()) {
-                /*
-                //elimino la anterior
-                    $imagenAntigua=$animal->imagen;
-
-                    //subo la imagen nueva
-                    $imagen = $request->file('imagen');
-                    $nombreImagen= uniqId().'-'.$imagen->getClientOriginalName();
-                    $imagen->move( public_path('assets/imagenes'),$nombreImagen);
-                */
-
-                /* Añado la imagen con el modelo*/
-                $imagen = new Imagen();
-                $imagenRequest = $request->file('imagen');
-                $imagen->nombre = $imagenRequest->getClientOriginalName();
-                $imagen->url = 'assets/imagenes/' . $request->imagen->store('', 'imagenes');
-                $imagen->save();
-                //$path = $request->imagen->store('', 'imagenes');
-                if ($animal->id_imagen) {
-                    //elimino la imagen anterior de animal
-                    Storage::disk('imagenes')->delete($animal->id_imagen->nombre);
-                }
-
-                $animal->id_imagen = $imagen->id;
-            }
             $animal->alimentacion = $request->alimentacion;
             $animal->descripcion = $request->descripcion;
+
+            if ($request->hasFile('imagen') && !empty($request->imagen) && $request->imagen->isValid()) {
+                /*//elimino la anterior
+                $imagenAntigua=$animal->imagen;
+                    //subo la imagen nueva
+                    $imagen = $request->file('imagen');$nombreImagen= uniqId().'-'.$imagen->getClientOriginalName();$imagen->move( public_path('assets/imagenes'),$nombreImagen);*/
+                //elimino la imagen anterior
+
+                    //elimino la imagen anterior de animal
+                Storage::disk('imagenes')->delete($animal->imagen->nombre);
+                $animal->imagen->delete();
+                /* Añado la imagen con el modelo*/
+                $imagen = new Imagen();
+                $nombre = $request->imagen->store('', 'imagenes');
+                $imagen->url = 'assets/imagenes/' . $nombre;
+                $imagen->nombre = $nombre;
+                $imagen->animal_id= $animal->id;
+                $imagen->save();
+                //$path = $request->imagen->store('', 'imagenes');
+                $animal->imagen_id = $imagen->id;
+            }
+
             $animal->save();
-            return redirect()->route('animales.show', ['animal' => $animal->especie]);
+
+            DB::commit();
+            return redirect()->route('animales.show', ['animal' => $animal])->with('success', 'Animal editado');
         } catch (PDOException $e) {
-            return "<p> " . $e->getMessage() . "</p>";
+            DB::rollBack();
+            return redirect()->route('animales.show', compact('animal'))->with('error', 'Error al actualizar los datos del animal. Detalles: ' . $e->getMessage());
+
         }
     }
 }

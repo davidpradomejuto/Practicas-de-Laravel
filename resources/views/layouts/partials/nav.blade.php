@@ -1,10 +1,10 @@
 <nav class="bg-green-800 py-6 relative ">
     <div class="container mx-auto flex px-8 xl:px-0">
         <div class="flex flex-grow">
-            <img src="{{ asset('assets/imagenes/logo.png') }}" alt="logo animal">
+            <img src="{{ asset('assets/logo.png') }}" alt="logo animal">
         </div>
         <div class="flew lg:hidden">
-            <img src="{{ asset('assets/imagenes/iconoMenu.png') }}" alt="menu" onClick="openMenu();">
+            <img src="{{ asset('assets/iconoMenu.png') }}" alt="menu" onClick="openMenu();">
         </div>
         <div id="menu"
             class="hidden flex-grow  w-full justify-between items-center absolute top-40 left-0 bg-green-800 py-14 px-8 lg:flex lg:relative lg:top-0  lg:py-0 lg:px-0 sm:px-14">

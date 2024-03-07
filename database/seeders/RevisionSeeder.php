@@ -16,7 +16,7 @@ class RevisionSeeder extends Seeder
     {
         $revision = new Revision();
         $revision->descripcion='Operacion de cadera';
-        $revision->animal_id = DB::table("animales")->first()->id;;
+        $revision->animal_id = DB::table("animales")->first()->id;
         $revision->fecha='2002-11-30';
         $revision->save();
 

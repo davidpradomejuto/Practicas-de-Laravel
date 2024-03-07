@@ -48,8 +48,10 @@ Route::get('titulaciones/{titulacion}', [TitulacionesController::class,'show'])-
 
 /* --------REST--------*/
 Route::get('rest', [RestWebServiceController::class,'index'])->name('rest.index');
-Route::get('rest/{animal}', [RestWebServiceController::class,'show'])->name('rest.show');
 Route::delete('rest/{animal}/borrar', [RestWebServiceController::class,'destroy'])->name('rest.destroy');
+
+Route::get('rest/{animal}', [RestWebServiceController::class,'show'])->name('rest.show');
+Route::post('rest/{animal}/insertar', [RestWebServiceController::class,'store'])->name('rest.store');
 Route::post('rest/insertar', [RestWebServiceController::class,'store'])->name('rest.store');
 
 

@@ -36,7 +36,7 @@ class RevisionesController extends Controller
 
             $animal = Animal::where('id', '=', $request->animal_id)->firstOrFail();
 
-            return redirect()->route('animales.show', ['animal' => $animal->especie]);
+            return redirect()->route('animales.show', ['animal' => $animal]);
 
         }catch(Exception $e){
             echo ("Error general" . $e->getMessage());
